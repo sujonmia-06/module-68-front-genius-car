@@ -1,11 +1,13 @@
 import React from 'react';
 import { useForm } from "react-hook-form";
+import { toast } from 'react-toastify';
 
 const AddService = () => {
     const { register, handleSubmit } = useForm();
-    const onSubmit = data => {
+    const onSubmit = (data, event) => {
+        event.preventDefault();
         console.log(data);
-        const url = `http://localhost:5000/service`;
+        const url = `https://rocky-river-58536.herokuapp.com/service`;
         fetch(url, {
             method: 'POST',
             headers: {
@@ -15,8 +17,10 @@ const AddService = () => {
         })
             .then(res => res.json())
             .then(result => {
+                toast('Service added successfully')
+                event.target.reset()
                 console.log(result)
-            })
+            });
     };
     return (
         <div
